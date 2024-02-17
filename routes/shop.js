@@ -1,9 +1,10 @@
 const express = require('express')
+const { viewsPath } = require('./../helpers/path')
 
 const router = express.Router()
 
-router.get('/shop', (req, res, next) => {
-    res.send('<h1>shop page</h1>')
+router.get('/', (req, res, next) => {
+    res.sendFile(viewsPath('shop', 'index.html'))
 })
 
 module.exports = router

@@ -1,20 +1,14 @@
 const express = require('express')
+const { viewsPath } = require('./../helpers/path')
 
 const router = express.Router()
 
 router.get('/', (req, res, next) => {
-    res.send('<h1>admin page</h1>')
+    res.sendFile(viewsPath('admin', 'index.html'))
 })
 
 router.get('/add-product', (req, res, next) => {
-    res.send(`
-        <form action="/admin/add-product" method="POST">
-            <input type="text" name="title" required>
-            <button type="submit">
-                Send
-            </button>
-        </form>
-    `)
+    res.sendFile(viewsPath('admin', 'add-product.html'))
 })
 
 router.post('/add-product', (req, res, next) => {

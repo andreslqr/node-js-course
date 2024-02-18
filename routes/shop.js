@@ -13,6 +13,7 @@ router.get('/', (req, res, next) => {
 
     res.render('shop', {
         products,
+        hasProducts: products.length > 0,
         metaTitle: "Shop",
         path: '/'
     })

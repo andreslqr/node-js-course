@@ -2,7 +2,7 @@ const express = require('express')
 
 const app = express()
 
-app.get('/users', (req, res, next) => {
+app.use('/users', (req, res, next) => {
     res.send('<h1> Users page </h1>')
 })
 

@@ -5,7 +5,10 @@ const { basePath, viewsPath } = require('./../helpers/path')
 const router = express.Router()
 
 router.get('/add-product', (req, res, next) => {
-    res.sendFile(viewsPath('admin', 'add-product.html'))
+    res.render('admin/add-product', {
+        metaTitle: 'Add product',
+        path: '/admin/add-product'
+    })
 })
 
 router.post('/add-product', (req, res, next) => {
@@ -13,7 +16,7 @@ router.post('/add-product', (req, res, next) => {
     fs.readFile(productsFile, (err, data) => {
         const products = JSON.parse(data ?? '[]')
         products.push({
-            title: req.body.title
+            title: req.body.title,
         })
         fs.writeFileSync(productsFile, JSON.stringify(products))
     })

@@ -13,7 +13,8 @@ router.get('/', (req, res, next) => {
 
     res.render('shop', {
         products,
-        metaTitle: "Shop"
+        metaTitle: "Shop",
+        path: '/'
     })
 })
 

@@ -23,7 +23,9 @@ app.use(shopRoutes)
 
 app.use((req, res, next) => {
     return res.status(404)
-            .sendFile(viewsPath('errors', '404.html'))
+            .render('errors/404', {
+                metaTitle: 'Page not found'
+            })
 })
 
 app.listen(3000)

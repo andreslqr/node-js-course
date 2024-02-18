@@ -1,6 +1,5 @@
 const express = require('express')
 const bodyParser = require('body-parser')
-// const { create } = require('express-handlebars')
 
 const { publicPath, viewsPath, basePath } = require('./helpers/path')
 
@@ -9,13 +8,9 @@ const shopRoutes = require('./routes/shop')
 
 
 const app = express()
-// const hbs = create({
-//     extname: 'hbs',
-//     defaultLayout: 'app'
-// })
+
 app.locals.basedir = basePath()
 
-// app.engine('.hbs', hbs.engine)
 app.set('view engine', 'ejs')
 app.set('views', 'views')
 

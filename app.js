@@ -1,11 +1,13 @@
 const express = require('express')
 const bodyParser = require('body-parser')
-const { publicPath, viewsPath } = require('./helpers/path')
+const { publicPath, viewsPath, basePath } = require('./helpers/path')
 
 const adminRoutes = require('./routes/admin')
 const shopRoutes = require('./routes/shop')
 
+
 const app = express()
+app.locals.basedir = basePath()
 
 app.set('view engine', 'pug')
 app.set('views', 'views')

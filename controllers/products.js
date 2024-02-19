@@ -1,6 +1,8 @@
 const fs = require('fs')
 const { basePath } = require('./../helpers/path')
 
+const Product = require('./../models/product')
+
 module.exports.getAddProduct = (req, res, next) => {
     res.render('admin/add-product', {
         metaTitle: 'Add product',
@@ -9,28 +11,22 @@ module.exports.getAddProduct = (req, res, next) => {
 }
 
 module.exports.postAddProduct = (req, res, next) => {
-    const productsFile = basePath('products.json')
-    fs.readFile(productsFile, (err, data) => {
-        const products = JSON.parse(data ?? '[]')
-        products.push({
-            title: req.body.title,
-        })
-        fs.writeFileSync(productsFile, JSON.stringify(products))
-    })
+
+    const product = new Product(req.body.title)
+    
+    product.save()
+
     res.redirect('/')
 }
 
 module.exports.getProducts = (req, res, next) => {
-    let products = [];
-    try {
-        products = JSON.parse(fs.readFileSync(basePath('products.json')))
-    } catch(err) {
-    }
+    Product.all((products) => {
+        res.render('shop', {
+            products,
+            hasProducts: products.length > 0,
+            metaTitle: "Shop",
+            path: '/'
+        })
+    });
 
-    res.render('shop', {
-        products,
-        hasProducts: products.length > 0,
-        metaTitle: "Shop",
-        path: '/'
-    })
 }

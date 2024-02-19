@@ -5,10 +5,12 @@ const basePath = (...paths) => path.join(path.dirname(require.main.filename), ..
 const viewsPath = (...paths) => basePath('views', ...paths)
 const routesPath = (...paths) => basePath('routes', ...paths)
 const publicPath = (...paths) => basePath('public', ...paths)
+const storagePath = (...paths) => basePath('storage', ...paths)
 
 module.exports = {
     basePath,
     viewsPath,
     routesPath,
-    publicPath
+    publicPath,
+    storagePath
 }

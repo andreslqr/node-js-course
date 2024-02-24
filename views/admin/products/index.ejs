@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('./../includes/head') %>
+</head>
+<body class="min-h-screen">
+    <%- include('./../includes/header') %>
+    <main class="py-4">
+        <div class="container mx-auto">
+            <div class="flex justify-end">
+                <a href="products/create" class="btn btn-primary">
+                    Create
+                </a>
+            </div>
+            <div class="card w-full bg-base-200 shadow-xl my-4">
+                <div class="card-body">
+                    <% if(records.length > 0) { %>
+                        <%- include('./index/table') %>
+                    <% } else { %>
+                        <%- include('./index/empty')  %>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+    </main>
+    <%- include('./../includes/footer') %>
+</body>
+</html>

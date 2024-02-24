@@ -1,0 +1,60 @@
+<div class="overflow-x-auto">
+    <table class="table table-pin-rows">
+        <!-- head -->
+        <thead>
+            <tr>
+                <th>Sku</th>
+                <th>Title</th>
+                <th>Price</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% for(let record of records) { %>
+            <tr>
+                <td>
+                    <%= record.sku %>
+                </td>
+                <td>
+                    <div class="flex items-center gap-3">
+                        <div class="avatar">
+                            <div class="mask mask-squircle w-12 h-12">
+                                <img src="<%= record.imageUrl %>"
+                                    alt="Image of <%= record.title %>" />
+                            </div>
+                        </div>
+                        <div>
+                            <div class="font-bold">
+                                <%= record.title %>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <span class="badge badge-info">
+                        $<%= record.price %>
+                    </span>
+                </td>
+                <th>
+                    <a href="/admin/products/<% record.id %>/edit" class="btn btn-primary btn-outline btn-xs">
+                        Edit
+                    </a>
+                    <button class="btn btn-error btn-outline btn-xs">
+                        Delete
+                    </button>
+                </th>
+            </tr>
+            <% } %>
+        </tbody>
+        <!-- foot -->
+        <tfoot>
+            <tr>
+                <th>Sku</th>
+                <th>Title</th>
+                <th>Price</th>
+                <th>Actions</th>
+            </tr>
+        </tfoot>
+
+    </table>
+</div>

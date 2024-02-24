@@ -24,6 +24,7 @@ app.use(express.static(publicPath()))
 app.use('/admin', adminRoutes)
 app.use(shopRoutes)
 
+
 app.use(errorsController.error404)
 
 app.listen(3000)

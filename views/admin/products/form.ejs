@@ -5,7 +5,7 @@
                 Sku
             </span>
         </div>
-        <input type="text" class="input input-bordered w-full" name="sku" />
+        <input type="text" class="input input-bordered w-full" name="sku" value="<%= product?.sku %>" />
     </label>
     <label class="form-control w-full">
         <div class="label">
@@ -13,7 +13,7 @@
                 Title
             </span>
         </div>
-        <input type="text" class="input input-bordered w-full" name="title" />
+        <input type="text" class="input input-bordered w-full" name="title" value="<%= product?.title %>" />
     </label>
     <label class="form-control w-full">
         <div class="label">
@@ -21,7 +21,7 @@
                 Link Url
             </span>
         </div>
-        <input type="text" class="input input-bordered w-full" name="imageUrl" />
+        <input type="text" class="input input-bordered w-full" name="imageUrl" value="<%= product?.imageUrl %>" />
     </label>
     <label class="form-control w-full">
         <div class="label">
@@ -29,11 +29,11 @@
                 Price
             </span>
         </div>
-        <input type="number" class="input input-bordered w-full" name="price" />
+        <input type="number" class="input input-bordered w-full" name="price" value="<%= product?.price %>" />
     </label>
     <label class="col-span-2 form-control w-full">
         <div class="label">
-            <span class="label-text">
+            <span class="label-text" value="<%= product?.description %>">
                 Description
             </span>
         </div>

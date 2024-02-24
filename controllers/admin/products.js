@@ -12,7 +12,8 @@ module.exports.index = (req, res, next) => {
 
 module.exports.create = (req, res, next) => {
     return res.render('admin/products/create', {
-        metaTitle: "Products | Create"
+        metaTitle: "Products | Create",
+        product: null
     })
 }
 
@@ -29,7 +30,8 @@ module.exports.edit = (req, res, next) => {
         console.log(product)
         if(product)
             return res.render('admin/products/edit', {
-                metaTitle: "Products | Edit"
+                metaTitle: "Products | Edit",
+                product
             })
         
         return errorsController.error404(req, res, next)

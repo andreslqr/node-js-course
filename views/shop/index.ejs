@@ -1,30 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <%- include('../includes/head'); -%>
-</head>
-<body>
-    <%- include('../includes/header'); -%>
-    <main>
-        <div class="container mx-auto">
-            <div>
-                <% if(products.length > 0) { %>
-                    <ul class="border border-gray-200 rounded overflow-hidden shadow-md">
-                        <% for(let product of products) { %>
-                            <li class="px-4 py-2 bg-white hover:bg-sky-100 hover:text-sky-900 border-b last:border-none border-gray-200 transition-all duration-300 ease-in-out">
-                                <%= product.title %>
-                            </li>
-                        <% } %>
-                    </ul>
-                <% } else { %>
-                    <h1>
-                        No products
-                    </h1>
-                <% } %>
-            </div>
-            
 
-        </div>
-    </main>
+<head>
+    <%- include('./includes/head') %>
+</head>
+
+<body class="d-flex h-100 text-center">
+    <div class="cover-container d-flex w-100 h-100 mx-auto flex-column">
+        <%- include('./includes/header') %>
+        <main class="px-3">
+            <a href="products" class="btn btn-primary">
+                Buy
+            </a>
+        </main>
+    </div>
+    <%- include('./includes/footer') %>
 </body>
+
 </html>

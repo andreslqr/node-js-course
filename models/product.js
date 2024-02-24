@@ -16,8 +16,11 @@ const Product = class {
     }
     save() {
         fs.readFile(productsPath, (err, data) => {
-            getData((products) => {
+            getData(products => {
 
+                if(! this.id)
+                    this.id = Math.random().toString()
+                
                 products.push(this)
                 fs.writeFileSync(productsPath, JSON.stringify(products))
 
@@ -27,6 +30,13 @@ const Product = class {
     }
     static findAll(cb) {
         return getData(cb)
+    }
+    static findByPk(pk, cb) {
+        return getData(products => {
+            const product = products.find(product => product.id == pk)
+
+            cb(product)
+        })
     }
 }
 

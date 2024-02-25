@@ -2,7 +2,7 @@ const Product = require('./../../models/product')
 const errorsController = require('./../errors')
 
 module.exports.index = async (req, res, next) => {
-    const products = await Product.findAll()
+    const products = await req.user.getProducts()
     
     return res.render('admin/products', {
         records: products,
@@ -19,7 +19,7 @@ module.exports.create = (req, res, next) => {
 
 module.exports.store = async (req, res, next) => {
 
-    await Product.create(req.body)
+    await req.user.createProduct(req.body)
 
     return res.redirect('/admin/products')
 }

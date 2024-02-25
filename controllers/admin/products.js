@@ -11,7 +11,7 @@ module.exports.index = (req, res, next) => {
 }
 
 module.exports.create = (req, res, next) => {
-    return res.render('admin/products/create', {
+    return res.render('admin/products/form', {
         metaTitle: "Products | Create",
         product: null
     })
@@ -26,16 +26,29 @@ module.exports.store = (req, res, next) => {
 
 module.exports.edit = (req, res, next) => {
 
-    return Product.findByPk(req.params.productId, (product) => {
-        console.log(product)
-        if(product)
-            return res.render('admin/products/edit', {
+    return Product.findByPk(req.params.productId, product => {
+        
+        if(product) {
+            return res.render('admin/products/form', {
                 metaTitle: "Products | Edit",
                 product
             })
+        }
         
         return errorsController.error404(req, res, next)
 
     })
 
+}
+
+module.exports.update = (req, res, next) => {
+    return Product.findByPk(req.params.productId, product => {
+        if(product) {
+            product.fill(req.body).save()
+
+            return res.redirect('/admin/products')
+        }
+
+        return errorsController.error404(req, res, next)
+    })
 }

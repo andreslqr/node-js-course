@@ -14,18 +14,29 @@ const Product = class {
     static create(attributes) {
         return new Product(attributes).save()
     }
+    fill(attributes) {
+        for(const attribute in attributes) {
+            this[attribute] = attributes[attribute]
+        }
+
+        return this
+    }
     save() {
-        fs.readFile(productsPath, (err, data) => {
-            getData(products => {
+        getData(products => {
 
-                if(! this.id)
-                    this.id = Math.random().toString()
-                
+            if(! this.id) {
+                this.id = Math.random().toString()
                 products.push(this)
-                fs.writeFileSync(productsPath, JSON.stringify(products))
+            }
+            else {
+                const productIndex = products.findIndex(record => record.id == this.id)
+                products[productIndex] = this
+            }
 
-            })
+            fs.writeFileSync(productsPath, JSON.stringify(products))
+
         })
+        
 
     }
     static findAll(cb) {

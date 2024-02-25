@@ -1,4 +1,5 @@
 const Product = require('./../../models/product')
+const ShoppingCart = require('./../../models/shoppingCart')
 const errorsController = require('./../../controllers/errors')
 
 module.exports.home = (req, res, next) => {
@@ -33,12 +34,15 @@ module.exports.listOrders = (req, res, next) => {
 }
 
 module.exports.shoppingCart = (req, res, next) => {
-    return res.render('shop/shopping-cart')
+    return res.render('shop/shopping-cart', {
+        metaTitle: 'Shopping Cart'
+    })
 }
 
 module.exports.addToShoppingCart = (req, res, next) => {
     return Product.findByPk(req.body.productId, product => {
-
+        ShoppingCart.addProduct(product.id, product.price)
+        
         return res.redirect('/shopping-cart')
     })
 

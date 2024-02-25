@@ -49,6 +49,11 @@ const Product = class {
             cb(product)
         })
     }
+    delete() {
+        getData(products => {
+            fs.writeFileSync(productsPath, JSON.stringify(products.filter(product => product.id !== this.id)))
+        })
+    }
 }
 
 const getData = cb => {

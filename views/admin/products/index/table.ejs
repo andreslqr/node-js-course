@@ -36,12 +36,14 @@
                     </span>
                 </td>
                 <th>
-                    <a href="/admin/products/<%= record.id %>/edit" class="btn btn-primary btn-outline btn-xs">
+                    <a href="products/<%= record.id %>/edit" class="btn btn-primary btn-outline btn-xs">
                         Edit
                     </a>
-                    <button class="btn btn-error btn-outline btn-xs">
-                        Delete
-                    </button>
+                    <form method="POST" action="products/<%= record.id %>/delete">
+                        <button type="submit" class="btn btn-error btn-outline btn-xs">
+                            Delete
+                        </button>
+                    </form>
                 </th>
             </tr>
             <% } %>

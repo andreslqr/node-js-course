@@ -52,3 +52,16 @@ module.exports.update = (req, res, next) => {
         return errorsController.error404(req, res, next)
     })
 }
+
+module.exports.destroy = (req, res, next) => {
+
+    return Product.findByPk(req.params.productId, product => {
+        if(product) {
+            product.delete()
+
+            return res.redirect('/admin/products')
+        }
+
+        return errorsController.error404(req, res, next)
+    })
+}

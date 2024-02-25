@@ -7,6 +7,7 @@ const errorsController = require('./controllers/errors')
 const adminRoutes = require('./routes/admin')
 const shopRoutes = require('./routes/shop')
 
+const sequelize = require('./database')
 
 const app = express()
 
@@ -26,5 +27,7 @@ app.use(shopRoutes)
 
 
 app.use(errorsController.error404)
+
+sequelize.sync({ force: true }).then()
 
 app.listen(3000)

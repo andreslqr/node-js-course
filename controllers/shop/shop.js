@@ -8,25 +8,27 @@ module.exports.home = (req, res, next) => {
     })
 }
 
-module.exports.listProducts = (req, res, next) => {
-    return Product.findAll(products => {
-        return res.render('shop/products', {
-            metaTitle: 'Products',
-            products
-        })
+module.exports.listProducts = async (req, res, next) => {
+    const products = await Product.findAll()
+
+    return res.render('shop/products', {
+        metaTitle: 'Products',
+        products
     })
+ 
 }
 
-module.exports.showProduct = (req, res, next) => {
-    return Product.findByPk(req.params.productId, product => {
-        if(! product)
-            return errorsController.error404(req, res, next)
+module.exports.showProduct = async (req, res, next) => {
+    const product = await Product.findByPk(req.params.productId)
+    
+    if(! product)
+        return errorsController.error404(req, res, next)
 
-        return res.render('shop/products/show', {
-            metaTitle: 'Products | ' + product.title,
-            product
-        })
+    return res.render('shop/products/show', {
+        metaTitle: 'Products | ' + product.title,
+        product
     })
+    
 }
 
 module.exports.listOrders = (req, res, next) => {

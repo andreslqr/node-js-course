@@ -9,7 +9,40 @@
     <div class="cover-container d-flex w-100 h-100 flex-column">
         <%- include('./../includes/header') %>
             <main class="container p-3">
-                
+                <% for(order of orders) { %>
+                    <div class="card mb-2">
+                        <div class="card-header">
+                            Order #<%= order.id %>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Sku</th>
+                                        <th scope="col">Title</th>
+                                        <th scope="col">Quantity</th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% for(let product of order.Products) { %>
+                                        <tr>
+                                            <td>
+                                                <%= product.sku %>
+                                            </td>
+                                            <td>
+                                                <%= product.title %>
+                                            </td>
+                                            <td>
+                                                <%= product.OrderItem.quantity %>
+                                            </td>
+                                        </tr>
+                                    <% } %>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                <% } %>
             </main>
     </div>
     <%- include('./../includes/footer') %>

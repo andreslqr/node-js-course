@@ -31,9 +31,21 @@ module.exports.showProduct = async (req, res, next) => {
     
 }
 
-module.exports.listOrders = (req, res, next) => {
+module.exports.listOrders = async (req, res, next) => {
+
+    const orders = await req.user.getOrders({
+        include: [
+            Product
+        ],
+        order: [
+            ['id', 'DESC']
+        ]
+    })
+    console.log(orders)
+
     return res.render('shop/orders', {
-        metaTitle: 'Orders'
+        metaTitle: 'Orders',
+        orders
     })
 }
 

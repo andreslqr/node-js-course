@@ -9,7 +9,31 @@
     <div class="cover-container d-flex w-100 h-100 flex-column">
         <%- include('./../includes/header') %>
             <main class="container p-3">
-                
+                <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th scope="col">Sku</th>
+                        <th scope="col">Product</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        <% for(let product of products) { %>
+                            <tr>
+                                <td><%= product.sku %></td>
+                                <td><%= product.title %></td>
+                                <td><%= product.ShoppingCartItem.quantity %></td>
+                                <td>
+                                    <form method="POST" action="/shopping-cart/delete">
+                                        <input type="hidden" value="<%= product.id %>" name="productId">
+                                        <button class="btn btn-danger btn-outline">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        <% } %>
+                    </tbody>
+                  </table>
             </main>
     </div>
     <%- include('./../includes/footer') %>

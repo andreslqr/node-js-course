@@ -1,5 +1,5 @@
 const Product = require('./../../models/product')
-const ShoppingCart = require('./../../models/shoppingCart')
+const ShoppingCartItem = require('./../../models/shoppingCartItem')
 const errorsController = require('./../../controllers/errors')
 
 module.exports.home = (req, res, next) => {
@@ -36,18 +36,52 @@ module.exports.listOrders = (req, res, next) => {
 }
 
 module.exports.shoppingCart = (req, res, next) => {
-    return res.render('shop/shopping-cart', {
-        metaTitle: 'Shopping Cart'
-    })
+    req.user.getShoppingCart()
+            .then(shoppingCart => {
+                return shoppingCart.getProducts()
+            })
+            .then(products => {
+                return res.render('shop/shopping-cart', {
+                    metaTitle: 'Shopping Cart',
+                    products
+                })
+            })
 }
 
-module.exports.addToShoppingCart = (req, res, next) => {
-    return Product.findByPk(req.body.productId, product => {
-        ShoppingCart.addProduct(product.id, product.price)
-        
-        return res.redirect('/shopping-cart')
-    })
+module.exports.addToShoppingCart = async (req, res, next) => {
 
+    const shoppingCart = await req.user.getShoppingCart()
+    const product = await Product.findByPk(req.body.productId)
+
+    if(await shoppingCart.hasProduct(product)) {
+        await ShoppingCartItem.increment({
+            quantity: 1
+        }, {
+            where: {
+                ShoppingCartId: shoppingCart.id,
+                ProductId: product.id
+            }
+        })
+    } else {
+        await shoppingCart.addProduct(product, {
+            through: {
+                quantity: 1
+            }
+        })
+    }
+    
+    return res.redirect('/shopping-cart')
+}
+
+module.exports.removeFromShoppingCart = async (req, res, next) => {
+    await req.user.getShoppingCart()
+            .then(shoppingCart => {
+                return Product.findByPk(req.body.productId)
+                        .then(product => {
+                            return shoppingCart.removeProduct(product)
+                        })
+            })
+    return res.redirect('/shopping-cart')
 }
 
 module.exports.checkout = (req, res, next) => {

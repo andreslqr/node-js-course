@@ -10,5 +10,6 @@ router.get('/orders', shopController.listOrders)
 router.get('/shopping-cart', shopController.shoppingCart)
 router.post('/shopping-cart/add', shopController.addToShoppingCart)
 router.post('/shopping-cart/delete', shopController.removeFromShoppingCart)
+router.post('/shopping-cart/order', shopController.convertToOrder)
 
 module.exports = router

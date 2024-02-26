@@ -11,19 +11,25 @@
             <main class="container p-3">
                 <table class="table table-striped">
                     <thead>
-                      <tr>
-                        <th scope="col">Sku</th>
-                        <th scope="col">Product</th>
-                        <th scope="col">Quantity</th>
-                        <th scope="col"></th>
-                      </tr>
+                        <tr>
+                            <th scope="col">Sku</th>
+                            <th scope="col">Product</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col"></th>
+                        </tr>
                     </thead>
                     <tbody>
                         <% for(let product of products) { %>
                             <tr>
-                                <td><%= product.sku %></td>
-                                <td><%= product.title %></td>
-                                <td><%= product.ShoppingCartItem.quantity %></td>
+                                <td>
+                                    <%= product.sku %>
+                                </td>
+                                <td>
+                                    <%= product.title %>
+                                </td>
+                                <td>
+                                    <%= product.ShoppingCartItem.quantity %>
+                                </td>
                                 <td>
                                     <form method="POST" action="/shopping-cart/delete">
                                         <input type="hidden" value="<%= product.id %>" name="productId">
@@ -33,7 +39,12 @@
                             </tr>
                         <% } %>
                     </tbody>
-                  </table>
+                </table>
+                <form action="/shopping-cart/order" method="POST">
+                    <button class="btn btn-primary" type="submit">
+                        Convert to order
+                    </button>
+                </form>
             </main>
     </div>
     <%- include('./../includes/footer') %>

@@ -88,7 +88,20 @@ module.exports.removeFromShoppingCart = async (req, res, next) => {
 
 module.exports.convertToOrder = async (req, res, next) => {
 
+    const shoppingCart = await req.user.getShoppingCart()
+    const products = await shoppingCart.getProducts()
 
+    const order = await req.user.createOrder()
+
+    await products.forEach(product => order.addProduct(product, {
+        through: {
+            quantity: product.ShoppingCartItem.quantity
+        }
+    }))
+
+    await shoppingCart.setProducts([])
+
+    return res.redirect('/orders')
 }
 
 module.exports.checkout = (req, res, next) => {

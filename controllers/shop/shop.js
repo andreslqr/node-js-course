@@ -32,7 +32,9 @@ module.exports.showProduct = async (req, res, next) => {
 }
 
 module.exports.listOrders = (req, res, next) => {
-    return res.render('shop/orders')
+    return res.render('shop/orders', {
+        metaTitle: 'Orders'
+    })
 }
 
 module.exports.shoppingCart = (req, res, next) => {
@@ -82,6 +84,11 @@ module.exports.removeFromShoppingCart = async (req, res, next) => {
                         })
             })
     return res.redirect('/shopping-cart')
+}
+
+module.exports.convertToOrder = async (req, res, next) => {
+
+
 }
 
 module.exports.checkout = (req, res, next) => {

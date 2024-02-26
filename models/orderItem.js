@@ -1,7 +1,7 @@
 const sequelize = require('./../database')
 const { DataTypes } = require('sequelize')
 
-const orderItem = sequelize.define('orderItem', {
+const OrderItem = sequelize.define('OrderItem', {
     id: {
         type: DataTypes.BIGINT,
         autoIncrement: true,
@@ -12,4 +12,4 @@ const orderItem = sequelize.define('orderItem', {
     }
 })
 
-module.exports = orderItem
+module.exports = OrderItem

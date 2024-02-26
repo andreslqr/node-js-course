@@ -51,7 +51,7 @@ Product.belongsToMany(ShoppingCart, { through: ShoppingCartItem })
 
 Order.belongsTo(User)
 Order.belongsToMany(Product, { through: OrderItem })
-Product.belongsToMany(Product, { through: OrderItem })
+Product.belongsToMany(Order, { through: OrderItem })
 
 
 sequelize.sync({ force: false })

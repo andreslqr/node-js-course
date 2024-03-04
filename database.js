@@ -1,11 +1,24 @@
-const { Sequelize } = require('sequelize')
+const { MongoClient } = require('mongodb')
 
-const sequelize = new Sequelize({
-    dialect: 'mysql',
-    database: 'node_js_course',
-    username: 'root',
-    password: null,
-    host: 'localhost'
-})
+let _db
 
-module.exports = sequelize
+const connection = async callback => {  
+    const connection = MongoClient.connect('mongodb+srv://node-js-course:xxxxxxxxxxx.kvoghpg.mongodb.net/?retryWrites=true&w=majority&appName=shop')
+    connection.then(async client =>  {
+        _db = client.db()
+        callback()
+        
+    })
+}
+const getDb = () => {
+    if(_db) {
+        return _db;
+    }
+
+
+    console.log('db not connected')
+}
+module.exports = {
+    connection,
+    getDb
+}

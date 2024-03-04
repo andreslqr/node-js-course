@@ -1,20 +1,7 @@
-const { Sequelize, DataTypes } = require('sequelize')
+const Model = require('./model')
 
-const sequelize = require('./../database')
-
-const User = sequelize.define('User', {
-    id: {
-        type: DataTypes.BIGINT,
-        autoIncrement: true,
-        allowNull: false,
-        primaryKey: true
-    },
-    name: {
-        type: DataTypes.STRING
-    },
-    email: {
-        type: DataTypes.STRING
-    }
-})
+class User extends Model {
+    static collectionName = 'users'
+}
 
 module.exports = User

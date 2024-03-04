@@ -2,10 +2,11 @@ const Product = require('./../../models/product')
 const errorsController = require('./../errors')
 
 module.exports.index = async (req, res, next) => {
-    const products = await req.user.getProducts()
-    
+
+    const products = await Product.get()
+
     return res.render('admin/products', {
-        records: products,
+        records: products ? products : [],
         metaTitle: "Products"
     })
 }
@@ -18,8 +19,10 @@ module.exports.create = (req, res, next) => {
 }
 
 module.exports.store = async (req, res, next) => {
-
-    await req.user.createProduct(req.body)
+    product = await new Product({
+        ...req.body,
+        userId: req.user._id
+    }).save()
 
     return res.redirect('/admin/products')
 }

@@ -10,7 +10,7 @@
         <main class="py-4">
             <div class="container mx-auto">
                 <div class="flex justify-end">
-                    <% if(product?.id) { %>
+                    <% if(product?._id) { %>
                         <button type="button" class="btn btn-outline btn-error" onclick="deleteConfirmation.showModal()">
                             Delete
                         </button>
@@ -90,7 +90,7 @@
                                 Cancel
                             </a>
                             <button type="submit" form="products-form" class="btn btn-primary btn-outline">
-                                <% if(product?.id) { %>
+                                <% if(product?._id) { %>
                                     Update
                                     <% } else { %>
                                         Create

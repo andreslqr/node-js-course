@@ -3,7 +3,7 @@ const errorsController = require('./../errors')
 
 module.exports.index = async (req, res, next) => {
 
-    const products = await Product.get()
+    const products = await Product.find()
 
     return res.render('admin/products', {
         records: products ? products : [],
@@ -21,7 +21,7 @@ module.exports.create = (req, res, next) => {
 module.exports.store = async (req, res, next) => {
     product = await new Product({
         ...req.body,
-        userId: req.user._id
+        userId: req.user
     }).save()
 
     return res.redirect('/admin/products')
@@ -29,7 +29,7 @@ module.exports.store = async (req, res, next) => {
 
 module.exports.edit = async (req, res, next) => {
 
-    const product = await Product.findByPk(req.params.productId)
+    const product = await Product.findById(req.params.productId)
     
     if(product) {
         return res.render('admin/products/form', {
@@ -44,7 +44,7 @@ module.exports.edit = async (req, res, next) => {
 
 module.exports.update = async (req, res, next) => {
 
-    let product = await Product.findByPk(req.params.productId)
+    let product = await Product.findById(req.params.productId)
 
     if(product) {
         product.set(req.body).save()
@@ -58,13 +58,7 @@ module.exports.update = async (req, res, next) => {
 
 module.exports.destroy = async (req, res, next) => {
 
-    const product = await Product.findByPk(req.params.productId)
+    await Product.findByIdAndDelete(req.params.productId)
 
-    if(product) {
-        product.destroy()
-
-        return res.redirect('/admin/products')
-    }
-
-    return errorsController.error404(req, res, next)
+    return res.redirect('/admin/products')
 }

@@ -1,5 +1,4 @@
 const Product = require('./../../models/product')
-const ShoppingCartItem = require('./../../models/shoppingCartItem')
 const errorsController = require('./../../controllers/errors')
 
 module.exports.home = (req, res, next) => {
@@ -9,7 +8,9 @@ module.exports.home = (req, res, next) => {
 }
 
 module.exports.listProducts = async (req, res, next) => {
-    const products = await Product.findAll()
+    const products = await Product.find()
+
+    console.log(products)
 
     return res.render('shop/products', {
         metaTitle: 'Products',

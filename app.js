@@ -4,10 +4,10 @@ const User = require('./models/user')
 
 const { publicPath, viewsPath, basePath } = require('./helpers/path')
 const errorsController = require('./controllers/errors')
-const { connection } = require('./database')
+const mongoose = require('mongoose')
 
 const adminRoutes = require('./routes/admin')
-//const shopRoutes = require('./routes/shop')
+const shopRoutes = require('./routes/shop')
 
 const app = express()
 
@@ -29,27 +29,24 @@ app.use(async (req, res, next) => {
         email: 'a@mail.com'
     }
 
-    let user = await User.findOneByFilter(data)
-
-    if(! user) {
-        user = await User.make(data).save()
-    }
-
-    req.user = user
+    req.user = await User.findOneAndUpdate(
+        data, // Condición de búsqueda
+        {}, // Valores a actualizar o establecer si el usuario no existe
+        { new: true, upsert: true } // Opciones: Devolver el nuevo documento y crearlo si no existe
+    );
 
     next()
 })
 
 
 app.use('/admin', adminRoutes)
-//app.use(shopRoutes)
+app.use(shopRoutes)
 
 
 app.use(errorsController.error404)
 
-connection(() => {
-    app.listen(3000)
-})
+mongoose.connect(process.env.MONGODB_URI)
+    .then(resulut => app.listen(process.env.APP_PORT))
 
 
 

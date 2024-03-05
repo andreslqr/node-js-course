@@ -1,12 +1,8 @@
-const sequelize = require('./../database')
-const { DataTypes } = require('sequelize')
+const { Schema, model } = require('mongoose') 
 
-const ShoppingCart = sequelize.define('ShoppingCart', {
-    id: {
-        type: DataTypes.BIGINT,
-        autoIncrement: true,
-        primaryKey: true
-    }
+
+const schema = new Schema({
+   
 })
 
-module.exports = ShoppingCart
+module.exports = model('ShoppingCart', schema)

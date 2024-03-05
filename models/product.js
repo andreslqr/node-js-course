@@ -1,7 +1,31 @@
-const Model = require('./model')
+const { Schema, model } = require('mongoose') 
 
-class Product extends Model {
-    static collectionName = 'products'
-}
 
-module.exports = Product
+const schema = new Schema({
+    sku: {
+        type: String,
+        required: true
+    },
+    title: {
+        type: String,
+        required: true
+    },
+    imageUrl: {
+        type: String,
+        required: true
+    },
+    price: {
+        type: Number,
+        required: true
+    },
+    description: {
+        type: String,
+        required: false
+    },
+    userId: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    }
+})
+
+module.exports = model('Product', schema)

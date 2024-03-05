@@ -11,7 +11,7 @@
             <main class="container p-3">
                 <div class="row">
                     <% for(let product of products) { %>
-                        <div class="card col-12 col-sm-6 col-md-4 col-lg-3" id="product-<%= product.id %>">
+                        <div class="card col-12 col-sm-6 col-md-4 col-lg-3" id="product-<%= product._id %>">
 
                             <img src="<%= product.imageUrl %>" class="card-img-top" alt="image of <%= product.sku %>">
                             <div class="card-body">
@@ -19,7 +19,7 @@
                                     <%= product.title %>
                                 </h5>
                                 <div class="d-flex justify-content-center">
-                                    <a class="btn btn-secondary mx-1" href="/products/<%= product.id %>">
+                                    <a class="btn btn-secondary mx-1" href="/products/<%= product._id %>">
                                         Details
                                     </a>
                                     <%- include('./../shopping-cart/add-to-cart', {product}) %> 

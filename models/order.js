@@ -1,12 +1,24 @@
-const sequelize = require('./../database')
-const { DataTypes } = require('sequelize')
+const { Schema, model } = require('mongoose') 
 
-const Order = sequelize.define('Order', {
-    id: {
-        type: DataTypes.BIGINT,
-        autoIncrement: true,
-        primaryKey: true
+
+const schema = new Schema({
+    products: [
+        {
+            product: {
+                type: Object,
+                required: true
+            },
+            quantity: {
+                type: Number,
+                required: true
+            }
+        }
+    ],
+    user: {
+        type: Schema.Types.ObjectId,
+        required: true,
+        ref: 'User'
     }
 })
 
-module.exports = Order
+module.exports = model('Order', schema)

@@ -10,8 +10,6 @@ module.exports.home = (req, res, next) => {
 module.exports.listProducts = async (req, res, next) => {
     const products = await Product.find()
 
-    console.log(products)
-
     return res.render('shop/products', {
         metaTitle: 'Products',
         products
@@ -20,7 +18,7 @@ module.exports.listProducts = async (req, res, next) => {
 }
 
 module.exports.showProduct = async (req, res, next) => {
-    const product = await Product.findByPk(req.params.productId)
+    const product = await Product.findById(req.params.productId)
     
     if(! product)
         return errorsController.error404(req, res, next)
@@ -42,60 +40,34 @@ module.exports.listOrders = async (req, res, next) => {
             ['id', 'DESC']
         ]
     })
-    console.log(orders)
-
     return res.render('shop/orders', {
         metaTitle: 'Orders',
         orders
     })
 }
 
-module.exports.shoppingCart = (req, res, next) => {
-    req.user.getShoppingCart()
-            .then(shoppingCart => {
-                return shoppingCart.getProducts()
-            })
-            .then(products => {
-                return res.render('shop/shopping-cart', {
-                    metaTitle: 'Shopping Cart',
-                    products
-                })
-            })
+module.exports.shoppingCart = async (req, res, next) => {
+    const user = await req.user
+        .populate('shoppingCart.items.productId')
+    
+    return res.render('shop/shopping-cart', {
+        metaTitle: 'Shopping Cart',
+        products: user.shoppingCart.items
+    })
 }
 
 module.exports.addToShoppingCart = async (req, res, next) => {
 
-    const shoppingCart = await req.user.getShoppingCart()
-    const product = await Product.findByPk(req.body.productId)
+    const product = await Product.findById(req.body.productId)
 
-    if(await shoppingCart.hasProduct(product)) {
-        await ShoppingCartItem.increment({
-            quantity: 1
-        }, {
-            where: {
-                ShoppingCartId: shoppingCart.id,
-                ProductId: product.id
-            }
-        })
-    } else {
-        await shoppingCart.addProduct(product, {
-            through: {
-                quantity: 1
-            }
-        })
-    }
-    
+    await req.user.addToShoppingCart(product)
+
     return res.redirect('/shopping-cart')
 }
 
 module.exports.removeFromShoppingCart = async (req, res, next) => {
-    await req.user.getShoppingCart()
-            .then(shoppingCart => {
-                return Product.findByPk(req.body.productId)
-                        .then(product => {
-                            return shoppingCart.removeProduct(product)
-                        })
-            })
+    
+    await req.user.removeFromShoppingCart(req.body.productId)
     return res.redirect('/shopping-cart')
 }
 

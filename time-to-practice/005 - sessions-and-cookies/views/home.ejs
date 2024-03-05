@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+</head>
+<body>
+
+    <h1>
+        <% if(user) { %>
+            You are registered as: <%= user.name %> with email <a href="mailto:<%= user.email %>"><%= user.email %></a>
+        <% } else { %>
+            You are not registered <a href="/login"> Login </a>
+        <% } %>
+    </h1>
+    
+</body>
+</html>

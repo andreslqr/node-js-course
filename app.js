@@ -9,6 +9,8 @@ const mongoose = require('mongoose')
 const adminRoutes = require('./routes/admin')
 const shopRoutes = require('./routes/shop')
 
+var session = require('express-session')
+
 const app = express()
 
 

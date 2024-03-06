@@ -20,7 +20,11 @@ module.exports.login = async (req, res, next) => {
         { new: true, upsert: true } // Opciones: Devolver el nuevo documento y crearlo si no existe
     );
 
-    
+    return res.redirect('/')
+}
+
+module.exports.logout = (req, res, next) => {
+    req.session.destroy()
 
     return res.redirect('/')
 }

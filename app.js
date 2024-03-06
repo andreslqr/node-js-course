@@ -36,8 +36,16 @@ app.use(session({
     store
 }))
 
+app.use((req, res, next) => {
+    res.locals.authenticated = req.session.user
+
+    return next()
+})
+
 app.use(async (req, res, next) => {
-    req.user = await  User.findById(req.session.user._id)
+
+    if(res.locals.authenticated)
+        req.user = await User.findById(req.session.user._id)
     next()
 })
 

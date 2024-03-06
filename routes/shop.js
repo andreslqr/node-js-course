@@ -1,7 +1,12 @@
 const express = require('express')
 const shopController = require('./../controllers/shop/shop')
+const authController = require('./../controllers/shop/auth')
 
 const router = express.Router()
+
+router.get('/login', authController.loginForm)
+router.post('/login', authController.login)
+
 
 router.get('/', shopController.home)
 router.get('/products', shopController.listProducts)

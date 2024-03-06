@@ -1,6 +1,8 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const User = require('./models/user')
+var session = require('express-session')
+var MongoDBStore = require('connect-mongodb-session')(session);
 
 const { publicPath, viewsPath, basePath } = require('./helpers/path')
 const errorsController = require('./controllers/errors')
@@ -8,6 +10,10 @@ const mongoose = require('mongoose')
 
 const adminRoutes = require('./routes/admin')
 const shopRoutes = require('./routes/shop')
+
+const store = new MongoDBStore({
+    uri: process.env.MONGODB_URI
+})
 
 const app = express()
 
@@ -23,18 +29,15 @@ app.use(bodyParser.urlencoded({
 
 app.use(express.static(publicPath()))
 
+app.use(session({
+    secret: 'secretkeybecauseisverysecret',
+    resave: false,
+    saveUninitialized: true,
+    store
+}))
+
 app.use(async (req, res, next) => {
-    let data = {
-        name: 'Jhon Doe',
-        email: 'a@mail.com'
-    }
-
-    req.user = await User.findOneAndUpdate(
-        data, // Condición de búsqueda
-        {}, // Valores a actualizar o establecer si el usuario no existe
-        { new: true, upsert: true } // Opciones: Devolver el nuevo documento y crearlo si no existe
-    );
-
+    req.user = await  User.findById(req.session.user._id)
     next()
 })
 
@@ -46,7 +49,8 @@ app.use(shopRoutes)
 app.use(errorsController.error404)
 
 mongoose.connect(process.env.MONGODB_URI)
-    .then(resulut => app.listen(process.env.APP_PORT))
+    .then(result =>  app.listen(process.env.APP_PORT))
+    .catch(err => console.log(err))
 
 
 

@@ -4,7 +4,7 @@ const User = require('./models/user')
 var session = require('express-session')
 var MongoDBStore = require('connect-mongodb-session')(session);
 
-const { publicPath, viewsPath, basePath } = require('./helpers/path')
+const { publicPath, basePath } = require('./helpers/path')
 const errorsController = require('./controllers/errors')
 const mongoose = require('mongoose')
 
@@ -30,7 +30,7 @@ app.use(bodyParser.urlencoded({
 app.use(express.static(publicPath()))
 
 app.use(session({
-    secret: 'secretkeybecauseisverysecret',
+    secret: process.env.APP_KEY,
     resave: false,
     saveUninitialized: true,
     store
@@ -57,7 +57,7 @@ app.use(shopRoutes)
 app.use(errorsController.error404)
 
 mongoose.connect(process.env.MONGODB_URI)
-    .then(result =>  app.listen(process.env.APP_PORT))
+    .then(result =>  app.listen(process.env.APP_PORT, () => console.log(`App listening in http://localhost:${process.env.APP_PORT}`)))
     .catch(err => console.log(err))
 
 

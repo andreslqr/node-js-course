@@ -2,7 +2,7 @@ const User = require('./../../models/user')
 const bcrypt = require('bcryptjs')
 
 module.exports.registerForm = (req, res, next) => {
-    return res.render('shop/auth/register', {
+    return res.render('admin/auth/register', {
         metaTitle: 'Register'
     })
 }
@@ -12,7 +12,7 @@ module.exports.register = async (req, res, next) => {
     const user = await User.findOne({ email: req.email })
 
     if(user) {
-        return res.redirect('/register')
+        return res.redirect('/admin/register')
     }
 
     await User.create({
@@ -21,12 +21,12 @@ module.exports.register = async (req, res, next) => {
         password: bcrypt.hashSync(req.body.password)
     })
 
-    return res.redirect('/login')
+    return res.redirect('/admin/login')
 }
 
 
 module.exports.loginForm = (req, res, next) => {
-    return res.render('shop/auth/login', {
+    return res.render('admin/auth/login', {
         metaTitle: 'Login'
     })
 }
@@ -44,14 +44,14 @@ module.exports.login = async (req, res, next) => {
 
         req.session.save()
 
-        return res.redirect('/')
+        return res.redirect('/admin/products')
     }
 
-    return res.redirect('login')
+    return res.redirect('/admin/login')
 }
 
 module.exports.logout = (req, res, next) => {
-    console.log(req.session.destroy())
-
-    return res.redirect('/')
+    
+    req.session.destroy()
+    return res.redirect('/admin')
 }

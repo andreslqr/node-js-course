@@ -38,7 +38,7 @@ module.exports.edit = async (req, res, next) => {
         })
     }
     
-    return errorsController.error404(req, res, next)
+    return next()
 
 }
 
@@ -52,7 +52,7 @@ module.exports.update = async (req, res, next) => {
         return res.redirect('/admin/products')
     }
 
-    return errorsController.error404(req, res, next)
+    return next()
     
 }
 
